@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export function Navigation() {
     return (
@@ -35,9 +34,6 @@ export function Navigation() {
                             Contact
                         </Link>
                     </nav>
-                </div>
-                <div className="ml-auto flex items-center space-x-4">
-                    <Button>Get Started</Button>
                 </div>
             </div>
         </header>

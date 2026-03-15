@@ -43,7 +43,7 @@ export function Testimonials() {
                             >
                                 <div className="relative h-24 w-24 rounded-full overflow-hidden">
                                     <Image
-                                        src={`/placeholder.svg?height=96&width=96`}
+                                        src='https://placehold.co/96x96/png'
                                         alt={testimonial.author}
                                         fill
                                         className="object-cover"
