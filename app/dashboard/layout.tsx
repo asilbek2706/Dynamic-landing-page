@@ -1,43 +1,28 @@
- "use client"
-
 import { AppSidebar } from "@/components/app-sidebar"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 import { Separator } from "@/components/ui/separator"
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { usePathname } from "next/navigation"
 import React from "react"
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 type LayoutProps = {
     children: React.ReactNode
 }
 
-export default function Layout({children}: LayoutProps) {
-    const pathname = usePathname()
+export default async function Layout({ children }: LayoutProps) {
+    const supabase = await createClient()
+    const { data, error } = await supabase.auth.getUser()
 
-    const segments = pathname.split("/").filter(Boolean)
-    const dashboardIndex = segments.indexOf("dashboard")
-    const breadcrumbSegments =
-        dashboardIndex === -1 ? segments : segments.slice(dashboardIndex)
+    if (!data?.user || error) {
+        redirect("/login")
+    }
 
-    const breadcrumbs = breadcrumbSegments.map((segment, index) => {
-        const href = "/" + breadcrumbSegments.slice(0, index + 1).join("/")
-        const label = segment
-            .replace(/-/g, " ")
-            .replace(/\b\w/g, (char) => char.toUpperCase())
-
-        return { href, label }
-    })
+    const breadcrumbs = [{ href: "/dashboard", label: "Dashboard" }]
 
     return (
         <SidebarProvider>
@@ -50,38 +35,7 @@ export default function Layout({children}: LayoutProps) {
                             orientation="vertical"
                             className="mr-2 data-vertical:h-4 data-vertical:self-auto"
                         />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                {breadcrumbs.map((crumb, index) => {
-                                    const isLast = index === breadcrumbs.length - 1
-
-                                    return (
-                                        <React.Fragment key={crumb.href}>
-                                            <BreadcrumbItem
-                                                className={
-                                                    index === 0 ? "hidden md:block" : undefined
-                                                }
-                                            >
-                                                {isLast ? (
-                                                    <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                                                ) : (
-                                                    <BreadcrumbLink href={crumb.href}>
-                                                        {crumb.label}
-                                                    </BreadcrumbLink>
-                                                )}
-                                            </BreadcrumbItem>
-                                            {!isLast && (
-                                                <BreadcrumbSeparator
-                                                    className={
-                                                        index === 0 ? "hidden md:block" : undefined
-                                                    }
-                                                />
-                                            )}
-                                        </React.Fragment>
-                                    )
-                                })}
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                        <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
