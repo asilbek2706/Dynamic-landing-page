@@ -16,11 +16,6 @@ import {
 import { TerminalSquareIcon, TerminalIcon } from "lucide-react"
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard Management",
@@ -46,29 +41,31 @@ const data = {
         {
           title: "Features",
           url: "/dashboard/features",
-          },
-          {
-            title: "Testimonials",
-            url: "/dashboard/testimonials",
-          },
-          {
-            title: "FAQs",
-            url: "/dashboard/faqs",
-          },
-          {
-            title: "Contact subbissions",
-            url: "/dashboard/contact-submissions",
-          },
-          {
-            title: "Footer",
-            url: "/dashboard/footer",
-          }
+        },
+        {
+          title: "Testimonials",
+          url: "/dashboard/testimonials",
+        },
+        {
+          title: "FAQs",
+          url: "/dashboard/faqs",
+        },
+        {
+          title: "Contact subbissions",
+          url: "/dashboard/contact-submissions",
+        },
+        {
+          title: "Footer",
+          url: "/dashboard/footer",
+        }
       ],
     },
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = { email?: string } & React.ComponentProps<typeof Sidebar>
+
+export function AppSidebar({ email, ...props }: AppSidebarProps) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -91,9 +88,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+      {email ? (
+        <SidebarFooter>
+          <NavUser email={email} />
+        </SidebarFooter>
+      ) : null}
     </Sidebar>
   )
 }
