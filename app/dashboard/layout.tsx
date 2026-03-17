@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/sidebar"
 import React from "react"
 import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
 
 type LayoutProps = {
     children: React.ReactNode
@@ -16,17 +15,13 @@ type LayoutProps = {
 
 export default async function Layout({ children }: LayoutProps) {
     const supabase = await createClient()
-    const { data, error } = await supabase.auth.getUser()
-
-    if (!data?.user || error) {
-        redirect("/login")
-    }
+    const { data: { user } } = await supabase.auth.getUser()
 
     const breadcrumbs = [{ href: "/dashboard", label: "Dashboard" }]
 
     return (
         <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar email={user?.email ?? undefined} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2">
                     <div className="flex items-center gap-2 px-4">

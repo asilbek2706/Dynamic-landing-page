@@ -11,7 +11,6 @@ import { createClient } from "@/lib/supabase/server";
 export default async function Page() {
   const supabase = await createClient();
   const { data: carouselItems } = await supabase.from('carousel_items').select();
-  console.log(carouselItems)
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <Navigation />
