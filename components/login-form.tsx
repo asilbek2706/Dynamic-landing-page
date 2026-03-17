@@ -74,7 +74,7 @@ export function LoginForm({
         }
 
         setErrorMessage?.(null)
-        router.push("/")
+        router.replace("/dashboard")
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err)
         setError(message)
