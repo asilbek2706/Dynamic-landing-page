@@ -1,5 +1,7 @@
 "use client"
 
+import * as React from "react"
+
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -26,12 +28,9 @@ export function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
                     const isLast = index === breadcrumbs.length - 1
 
                     return (
-                        <>
+                        <React.Fragment key={crumb.href}>
                             <BreadcrumbItem
-                                key={crumb.href}
-                                className={
-                                    index === 0 ? "hidden md:block" : undefined
-                                }
+                                className={index === 0 ? "hidden md:block" : undefined}
                             >
                                 {isLast ? (
                                     <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
@@ -48,7 +47,7 @@ export function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
                                     }
                                 />
                             )}
-                        </>
+                        </React.Fragment>
                     )
                 })}
             </BreadcrumbList>
