@@ -6,7 +6,10 @@ import Link from "next/link";
 
 export default async function CarouselManagemant() {
     const supabase = await createClient();
-    const { data: carouselItems } = await supabase.from('carousel_items').select('*')
+    const { data: carouselItems } = await supabase
+        .from('carousel_items')
+        .select('*')
+        .order('created_at', { ascending: true })
     return <div>
         <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-bold">Carousel management</h3>

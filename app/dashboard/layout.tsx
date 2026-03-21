@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sidebar"
 import React from "react"
 import { createClient } from "@/lib/supabase/server"
+import { Toaster } from "@/components/ui/sonner"
 
 type LayoutProps = {
     children: React.ReactNode
@@ -19,6 +20,7 @@ export default async function Layout({ children }: LayoutProps) {
 
     return (
         <SidebarProvider>
+            <Toaster richColors closeButton />
             <AppSidebar email={user?.email ?? undefined} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2">
