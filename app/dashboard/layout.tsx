@@ -17,8 +17,6 @@ export default async function Layout({ children }: LayoutProps) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
 
-    const breadcrumbs = [{ href: "/dashboard", label: "Dashboard" }]
-
     return (
         <SidebarProvider>
             <AppSidebar email={user?.email ?? undefined} />
@@ -30,7 +28,7 @@ export default async function Layout({ children }: LayoutProps) {
                             orientation="vertical"
                             className="mr-2 data-vertical:h-4 data-vertical:self-auto"
                         />
-                        <Breadcrumbs breadcrumbs={breadcrumbs} />
+                        <Breadcrumbs />
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
