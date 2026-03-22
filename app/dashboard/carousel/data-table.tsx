@@ -74,6 +74,7 @@ export default function CarouselDataTable({ items }: CarouselDataTableProps) {
                                 <Link
                                     href={item.cta_link}
                                     className="text-blue-500 underline hover:no-underline"
+                                    target="_blank"
                                 >
                                     {item.cta_text}
                                 </Link>

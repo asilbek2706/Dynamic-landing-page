@@ -1,13 +1,18 @@
-import { FadeIn } from "./fade-in";
-import Image from "next/image";
+import { FadeIn } from './fade-in';
+import Image from 'next/image';
+import { AboutUs as AboutUsType } from '@/shared/types/about-us.type';
 
-export function AboutUs() {
+type AboutUsProps = {
+    aboutUs: AboutUsType;
+};
+
+export function AboutUs({ aboutUs }: AboutUsProps) {
     return (
-        <section className="w-full max-w-7xl mx-auto px-4 py-16 md:py-24">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+        <section className="mx-auto w-full max-w-7xl px-4 py-16 md:py-24">
+            <div className="grid items-center gap-12 md:grid-cols-2">
                 <FadeIn>
                     <Image
-                        src="https://placehold.co/400x400/png"
+                        src={aboutUs.image_url}
                         alt="About Us"
                         width={400}
                         height={400}
@@ -16,18 +21,11 @@ export function AboutUs() {
                 </FadeIn>
                 <FadeIn>
                     <div className="space-y-4">
-                        <h2 className="text-3xl font-bold tracking-tighter">
-                            About Us
-                        </h2>
-                        <p className="text-muted-foreground">
-                            We are dedicated to providing high-quality offline learning
-                            experiences. Our center combines traditional teaching methods
-                            with modern learning approaches to ensure the best possible
-                            educational outcomes for our students.
-                        </p>
+                        <h2 className="text-3xl font-bold tracking-tighter">{aboutUs.title}</h2>
+                        <p className="text-muted-foreground">{aboutUs.description}</p>
                     </div>
                 </FadeIn>
             </div>
         </section>
-    )
+    );
 }

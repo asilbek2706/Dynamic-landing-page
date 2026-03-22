@@ -1,9 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-images: {
-  domains: ['placehold.co'],
-},
+    images: {
+        domains: ['placehold.co', 'mklggxwnlxqlgcgtqkhs.supabase.co'],
+    },
 };
 
 export default nextConfig;
