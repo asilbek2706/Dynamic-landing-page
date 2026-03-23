@@ -2,7 +2,7 @@
 
 import { LoginForm } from "@/components/login-form"
 import { GalleryVerticalEndIcon } from "lucide-react"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -16,10 +16,12 @@ export default function LoginPage() {
           </div>
           Learning centre
         </a>
-        <LoginForm
-          errorMessage={errorMessage ?? undefined}
-          setErrorMessage={setErrorMessage}
-        />
+        <Suspense fallback={null}>
+          <LoginForm
+            errorMessage={errorMessage ?? undefined}
+            setErrorMessage={setErrorMessage}
+          />
+        </Suspense>
       </div>
     </div>
   )

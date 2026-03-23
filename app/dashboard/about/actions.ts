@@ -13,6 +13,10 @@ export default async function updateAboutUs(aboutUs: AboutFormValues) {
 }
 
 export async function uploadImage(file: File | undefined) {
+    if (!file) {
+        return { success: false, error: 'No file provided' };
+    }
+
     const supabase = await createClient();
     const { data, error } = await supabase.storage.from('images').upload(`about_us-${Date.now()}.png`, file);
     if (error) {
